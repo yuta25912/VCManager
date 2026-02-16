@@ -1,0 +1,17 @@
+{
+    "id": "VCManager",
+    "name": "VCManager",
+    "version": "1.0.0-dev1",
+    "author": "yuta25912",
+    "description": "全員移動、特定ユーザーの移動、チャンネル権限（表示・接続・発言）の個別ロックなど、高度なボイスチャンネル操作を可能にします。",
+    "tags": [
+        "utility",
+        "voice"
+    ],
+    "affectsStyle": false,
+    "affectsBlocks": true,
+    "repo": "https://github.com/yuta25912/VCManager",
+    "license": "MIT",
+    "uuid": "7f8b9e0a-1c2d-4e3f-a4b5-c6d7e8f9a0b1",
+    "minAppVersion": "1.0.0"
+}
