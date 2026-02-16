@@ -1,9 +1,9 @@
 {
     "id": "VCManager",
     "name": "VCManager",
-    "version": "1.0.0-dev1",
+    "version": "1.0.0-dev2",
     "author": "yuta25912",
-    "description": "全員移動、特定ユーザーの移動、チャンネル権限（表示・接続・発言）の個別ロックなど、高度なボイスチャンネル操作を可能にします。",
+    "description": "全員移動、個別/全員切断、人数制限の動的変更、タイムアウトなど、高度なボイスチャンネル操作を可能にします。",
     "tags": [
         "utility",
         "voice"
