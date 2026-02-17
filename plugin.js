@@ -71,11 +71,10 @@ class Plugin {
                     .appendField("の接続可能人数を");
                 this.appendDummyInput()
                     .appendField(new Blockly.FieldNumber(0, 0, 99), "NUM")
-                    .appendField("人に")
                     .appendField(new Blockly.FieldDropdown([
-                        ["セットする", "SET"],
-                        ["増やす", "ADD"],
-                        ["減らす", "SUB"],
+                        ["人増やす", "ADD"],
+                        ["人減らす", "SUB"],
+                        ["人にセットする", "SET"],
                         ["無限(なし)にする", "INF"]
                     ]), "MODE");
                 this.setPreviousStatement(true, null);
