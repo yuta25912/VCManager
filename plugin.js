@@ -137,6 +137,67 @@ class Plugin {
             }
         };
 
+        // 7. 名前変更
+        Blockly.Blocks['vc_set_name'] = {
+            init: function () {
+                this.appendValueInput("NAME")
+                    .setCheck("String")
+                    .appendField("📝 VC")
+                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField("の名前を");
+                this.appendDummyInput()
+                    .appendField("に変える");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+                this.setTooltip("ボイスチャンネルの名前を動的に変更します。");
+            }
+        };
+
+        // 8. ステータス変更
+        Blockly.Blocks['vc_set_status'] = {
+            init: function () {
+                this.appendValueInput("STATUS")
+                    .setCheck("String")
+                    .appendField("💬 VC")
+                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField("のステータスを");
+                this.appendDummyInput()
+                    .appendField("に変える");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+                this.setTooltip("ボイスチャンネルのステータス（ボイス状態メッセージ）を変更します。");
+            }
+        };
+
+        // 9. 所属VC取得
+        Blockly.Blocks['vc_get_user_vc'] = {
+            init: function () {
+                this.appendValueInput("USER")
+                    .setCheck(null)
+                    .appendField("🔍 ");
+                this.appendDummyInput()
+                    .appendField("がどのVCにいるか取得する");
+                this.setOutput(true, null);
+                this.setColour(160);
+                this.setTooltip("ユーザーが現在接続しているボイスチャンネルを返します。どこにもいない場合はNoneを返します。");
+            }
+        };
+
+        // 10. 招待リンク発行 (30分)
+        Blockly.Blocks['vc_create_invite_30m'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("🔗 VC")
+                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField("への一時的なリンク(30分)を発行する");
+                this.setOutput(true, "String");
+                this.setColour(160);
+                this.setTooltip("指定したボイスチャンネルへの30分間有効な招待リンクを発行し、URLを返します。");
+            }
+        };
+
         const registerGenerator = (id, fn) => {
             if (Blockly.Python) {
                 if (Blockly.Python.forBlock) {
@@ -249,6 +310,38 @@ if channel and target:
 `;
         });
 
+        registerGenerator('vc_set_name', (block) => {
+            const channelId = block.getFieldValue('CHANNEL_ID');
+            const name = Blockly.Python.valueToCode(block, 'NAME', 0) || '""';
+            return `
+channel = self.bot.get_channel(int(${channelId}))
+if channel:
+    await channel.edit(name=${name})
+`;
+        });
+
+        registerGenerator('vc_set_status', (block) => {
+            const channelId = block.getFieldValue('CHANNEL_ID');
+            const status = Blockly.Python.valueToCode(block, 'STATUS', 0) || 'None';
+            return `
+channel = self.bot.get_channel(int(${channelId}))
+if channel and hasattr(channel, "edit"):
+    await channel.edit(status=${status})
+`;
+        });
+
+        registerGenerator('vc_get_user_vc', (block) => {
+            const user = Blockly.Python.valueToCode(block, 'USER', 0) || 'None';
+            const code = `(${user}.voice.channel if hasattr(${user}, "voice") and ${user}.voice else None) if ${user} else None`;
+            return [code, 0];
+        });
+
+        registerGenerator('vc_create_invite_30m', (block) => {
+            const channelId = block.getFieldValue('CHANNEL_ID');
+            const code = `(await self.bot.get_channel(int(${channelId})).create_invite(max_age=1800)).url if self.bot.get_channel(int(${channelId})) else ""`;
+            return [code, 0];
+        });
+
         this.updateToolbox();
     }
 
@@ -271,6 +364,10 @@ if channel and target:
             <block type="vc_disconnect_member"></block>
             <block type="vc_set_user_limit"></block>
             <block type="vc_reset_user_limit"></block>
+            <block type="vc_set_name"></block>
+            <block type="vc_set_status"></block>
+            <block type="vc_get_user_vc"></block>
+            <block type="vc_create_invite_30m"></block>
             <block type="vc_timeout_member"></block>
             <block type="vc_set_permission"></block>
         `;
