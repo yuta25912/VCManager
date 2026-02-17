@@ -74,13 +74,26 @@ class Plugin {
                     .appendField(new Blockly.FieldDropdown([
                         ["人増やす", "ADD"],
                         ["人減らす", "SUB"],
-                        ["人にセットする", "SET"],
-                        ["無限(なし)にする", "INF"]
+                        ["人にセットする", "SET"]
                     ]), "MODE");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
                 this.setColour(160);
                 this.setTooltip("ボイスチャンネルの人数制限を動的に変更します。");
+            }
+        };
+
+        // 4.5 人数制限解除
+        Blockly.Blocks['vc_reset_user_limit'] = {
+            init: function () {
+                this.appendDummyInput()
+                    .appendField("📏 VC")
+                    .appendField(new Blockly.FieldTextInput("チャンネルID"), "CHANNEL_ID")
+                    .appendField("の人数制限を解除する(無限)");
+                this.setPreviousStatement(true, null);
+                this.setNextStatement(true, null);
+                this.setColour(160);
+                this.setTooltip("ボイスチャンネルの人数制限を解除して無限にします。");
             }
         };
 
@@ -172,14 +185,22 @@ if member and hasattr(member, "move_to"):
             const mode = block.getFieldValue('MODE');
 
             let calc = `int(${num})`;
-            if (mode === 'INF') calc = '0';
-            else if (mode === 'ADD') calc = `channel.user_limit + int(${num})`;
+            if (mode === 'ADD') calc = `channel.user_limit + int(${num})`;
             else if (mode === 'SUB') calc = `max(0, channel.user_limit - int(${num}))`;
 
             return `
 channel = self.bot.get_channel(int(${channelId}))
 if channel:
     await channel.edit(user_limit=${calc})
+`;
+        });
+
+        registerGenerator('vc_reset_user_limit', (block) => {
+            const channelId = block.getFieldValue('CHANNEL_ID');
+            return `
+channel = self.bot.get_channel(int(${channelId}))
+if channel:
+    await channel.edit(user_limit=0)
 `;
         });
 
@@ -249,6 +270,7 @@ if channel and target:
             <block type="vc_disconnect_all"></block>
             <block type="vc_disconnect_member"></block>
             <block type="vc_set_user_limit"></block>
+            <block type="vc_reset_user_limit"></block>
             <block type="vc_timeout_member"></block>
             <block type="vc_set_permission"></block>
         `;
