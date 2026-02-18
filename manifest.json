@@ -1,7 +1,7 @@
 {
     "id": "VCManager",
     "name": "VCManager",
-    "version": "1.0.0-dev5",
+    "version": "1.0.0",
     "author": "yuta25912",
     "description": "名前/ステータス変更、所属VC取得、招待発行、切断、人数制限、権限ロックなど、あらゆるボイスチャンネル操作を網羅します。",
     "icon": "🔊",

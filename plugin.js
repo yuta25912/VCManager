@@ -22,9 +22,9 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔊 チャンネル")
-                    .appendField(new Blockly.FieldTextInput("元ID"), "FROM_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "FROM_ID")
                     .appendField("の全員を")
-                    .appendField(new Blockly.FieldTextInput("先ID"), "TO_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "TO_ID")
                     .appendField("へ移動");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -38,7 +38,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔊 チャンネル")
-                    .appendField(new Blockly.FieldTextInput("チャンネルID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("内の全員を切断させる");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -67,7 +67,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("📏 VC")
-                    .appendField(new Blockly.FieldTextInput("チャンネルID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("の接続可能人数を");
                 this.appendDummyInput()
                     .appendField(new Blockly.FieldNumber(0, 0, 99), "NUM")
@@ -88,7 +88,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("📏 VC")
-                    .appendField(new Blockly.FieldTextInput("チャンネルID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("の人数制限を解除する(無限)");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -97,7 +97,7 @@ class Plugin {
             }
         };
 
-        // 5. サーバーミュート/タイムアウト (期間指定)
+        // 5. タイムアウト (期間指定)
         Blockly.Blocks['vc_timeout_member'] = {
             init: function () {
                 this.appendValueInput("USER")
@@ -120,9 +120,9 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔐 チャンネル")
-                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("の対象")
-                    .appendField(new Blockly.FieldTextInput("ID"), "TARGET_ID");
+                    .appendField(new Blockly.FieldNumber(0, 0), "TARGET_ID");
                 this.appendDummyInput()
                     .appendField("👁️表示:")
                     .appendField(new Blockly.FieldDropdown([["変更なし", "NONE"], ["許可", "ALLOW"], ["拒否", "DENY"]]), "VIEW")
@@ -143,7 +143,7 @@ class Plugin {
                 this.appendValueInput("NAME")
                     .setCheck("String")
                     .appendField("📝 VC")
-                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("の名前を");
                 this.appendDummyInput()
                     .appendField("に変える");
@@ -160,7 +160,7 @@ class Plugin {
                 this.appendValueInput("STATUS")
                     .setCheck("String")
                     .appendField("💬 VC")
-                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("のステータスを");
                 this.appendDummyInput()
                     .appendField("に変える");
@@ -190,7 +190,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔗 VC")
-                    .appendField(new Blockly.FieldTextInput("ID"), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
                     .appendField("への一時的なリンク(30分)を発行する");
                 this.setOutput(true, "String");
                 this.setColour(160);
