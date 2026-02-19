@@ -17,14 +17,18 @@ class Plugin {
     registerBlocks() {
         if (typeof Blockly === 'undefined') return;
 
+        const idValidator = function (newValue) {
+            return newValue.replace(/[^0-9]/g, '');
+        };
+
         // 1. VC全員移動
         Blockly.Blocks['vc_move_all'] = {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔊 チャンネル")
-                    .appendField(new Blockly.FieldNumber(0, 0), "FROM_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "FROM_ID")
                     .appendField("の全員を")
-                    .appendField(new Blockly.FieldNumber(0, 0), "TO_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "TO_ID")
                     .appendField("へ移動");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -38,7 +42,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔊 チャンネル")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("内の全員を切断させる");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -67,10 +71,10 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("📏 VC")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("の接続可能人数を");
                 this.appendDummyInput()
-                    .appendField(new Blockly.FieldNumber(0, 0, 99), "NUM")
+                    .appendField(new Blockly.FieldNumber(0, 0, 99), "NUM") // 0-99なのでFieldNumberでOK
                     .appendField(new Blockly.FieldDropdown([
                         ["人増やす", "ADD"],
                         ["人減らす", "SUB"],
@@ -88,7 +92,7 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("📏 VC")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("の人数制限を解除する(無限)");
                 this.setPreviousStatement(true, null);
                 this.setNextStatement(true, null);
@@ -120,9 +124,9 @@ class Plugin {
             init: function () {
                 this.appendDummyInput()
                     .appendField("🔐 チャンネル")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("の対象")
-                    .appendField(new Blockly.FieldNumber(0, 0), "TARGET_ID");
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "TARGET_ID");
                 this.appendDummyInput()
                     .appendField("👁️表示:")
                     .appendField(new Blockly.FieldDropdown([["変更なし", "NONE"], ["許可", "ALLOW"], ["拒否", "DENY"]]), "VIEW")
@@ -143,7 +147,7 @@ class Plugin {
                 this.appendValueInput("NAME")
                     .setCheck("String")
                     .appendField("📝 VC")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("の名前を");
                 this.appendDummyInput()
                     .appendField("に変える");
@@ -160,7 +164,7 @@ class Plugin {
                 this.appendValueInput("STATUS")
                     .setCheck("String")
                     .appendField("💬 VC")
-                    .appendField(new Blockly.FieldNumber(0, 0), "CHANNEL_ID")
+                    .appendField(new Blockly.FieldTextInput("0", idValidator), "CHANNEL_ID")
                     .appendField("のステータスを");
                 this.appendDummyInput()
                     .appendField("に変える");
