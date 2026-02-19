@@ -3,6 +3,8 @@
     "name": "VCManager",
     "version": "1.0.0",
     "author": "yuta25912",
+    "minAppVersion": "1.0.0",
+    "uuid": "cb058eff-c408-45d4-8f52-8512cdf61c88",
     "description": "名前/ステータス変更、所属VC取得、招待発行、切断、人数制限、権限ロックなど、あらゆるボイスチャンネル操作を網羅します。",
     "icon": "🔊",
     "tags": [
@@ -11,8 +13,5 @@
     ],
     "affectsStyle": false,
     "affectsBlocks": true,
-    "repo": "https://github.com/yuta25912/VCManager",
-    "license": "MIT",
-    "uuid": "cb058eff-c408-45d4-8f52-8512cdf61c88",
-    "minAppVersion": "1.0.0"
+    "repo": "https://github.com/yuta25912/VCManager"
 }
