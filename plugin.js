@@ -216,8 +216,8 @@ class Plugin {
             const fromId = block.getFieldValue('FROM_ID');
             const toId = block.getFieldValue('TO_ID');
             return `
-channel_from = self.bot.get_channel(int(${fromId}))
-channel_to = self.bot.get_channel(int(${toId}))
+channel_from = bot.get_channel(int(${fromId}))
+channel_to = bot.get_channel(int(${toId}))
 if channel_from and channel_to:
     for member in channel_from.members:
         await member.move_to(channel_to)
@@ -227,7 +227,7 @@ if channel_from and channel_to:
         registerGenerator('vc_disconnect_all', (block) => {
             const channelId = block.getFieldValue('CHANNEL_ID');
             return `
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 if channel:
     for member in channel.members:
         await member.move_to(None)
@@ -254,7 +254,7 @@ if member and hasattr(member, "move_to"):
             else if (mode === 'SUB') calc = `max(0, channel.user_limit - int(${num}))`;
 
             return `
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 if channel:
     await channel.edit(user_limit=${calc})
 `;
@@ -263,7 +263,7 @@ if channel:
         registerGenerator('vc_reset_user_limit', (block) => {
             const channelId = block.getFieldValue('CHANNEL_ID');
             return `
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 if channel:
     await channel.edit(user_limit=0)
 `;
@@ -303,7 +303,7 @@ if member:
 
             return `
 t_id = int(${targetId})
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 target = guild.get_role(t_id) or guild.get_member(t_id)
 if channel and target:
     overwrite = channel.overwrites_for(target)
@@ -318,7 +318,7 @@ if channel and target:
             const channelId = block.getFieldValue('CHANNEL_ID');
             const name = Blockly.Python.valueToCode(block, 'NAME', 0) || '""';
             return `
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 if channel:
     await channel.edit(name=${name})
 `;
@@ -328,7 +328,7 @@ if channel:
             const channelId = block.getFieldValue('CHANNEL_ID');
             const status = Blockly.Python.valueToCode(block, 'STATUS', 0) || 'None';
             return `
-channel = self.bot.get_channel(int(${channelId}))
+channel = bot.get_channel(int(${channelId}))
 if channel and hasattr(channel, "edit"):
     await channel.edit(status=${status})
 `;
@@ -342,7 +342,7 @@ if channel and hasattr(channel, "edit"):
 
         registerGenerator('vc_create_invite_30m', (block) => {
             const channelId = block.getFieldValue('CHANNEL_ID');
-            const code = `(await self.bot.get_channel(int(${channelId})).create_invite(max_age=1800)).url if self.bot.get_channel(int(${channelId})) else ""`;
+            const code = `(await bot.get_channel(int(${channelId})).create_invite(max_age=1800)).url if bot.get_channel(int(${channelId})) else ""`;
             return [code, 0];
         });
 
